@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import "./MovieDesc.css";
-import YouTube from "react-youtube";
 import { useParams } from "react-router-dom";
+import YouTube from "react-youtube";
+import "./MovieDesc.css";
 
 const MovieDesc = ({darkLight}) => {
     const [movie, setMovie] = useState({});
@@ -12,31 +12,25 @@ const MovieDesc = ({darkLight}) => {
 
     useEffect(() => {
         getMovies(movieId);
-        getVideos(movieId);
     }, [movieId]);
-
+    
     const getMovies = async (movieId) => {
         try {
-            const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=22115f0fff1e31a221cf90785636db90&language=en-US`);
-            const data = await response.json();
-            setMovie(data);
-        } catch (error) {
-            console.error("Error fetching movie:", error);
-        }
-    };
-
-    const getVideos = async (movieId) => {
-        try {
-            const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=22115f0fff1e31a221cf90785636db90&language=en-US`);
-            const data = await response.json();
-            const video = data.results.find((item) => item.type === "Trailer" && item.site === "YouTube");
+            const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=22115f0fff1e31a221cf90785636db90&language=en-US`);
+            const movieData = await movieResponse.json();
+            setMovie(movieData);
+            
+            const videosResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=22115f0fff1e31a221cf90785636db90&language=en-US`);
+            const videosData = await videosResponse.json();
+            const video = videosData.results.find((item) => item.type === "Trailer" && item.site === "YouTube");
+            
             if (video) {
                 setVideoKey(video.key);
             } else {
                 console.error("No trailer found for the movie");
             }
         } catch (error) {
-            console.error("Error fetching videos:", error);
+            console.error("Error fetching movie details or videos:", error);
         }
     };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import MoviesList from './MoviesComponents/MoviesList';
+import MoviesList from './MoviesList';
 import './Movies.css';
 
 const Movies = ({ darkLight }) => {
