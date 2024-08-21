@@ -1,29 +1,28 @@
 import express from "express";
 import cors from "cors";
-import mysql from "mysql2";
+import mysql from "mysql2/promise";
 
+const app = express();
 const router = express.Router();
-router.use(cors());
-router.use(express.json());
-router.use(express.urlencoded({ extended: true }));
 
-const connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "BnYnMySQLHspActm26a",
-    database: "MovieUserList"
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const connection = await mysql.createConnection({
+    host: "bkd0tkqe4pywqvphn92c-mysql.services.clever-cloud.com",
+    user: "urz0ziojlffpstv8",
+    password: "aTSzBPPk550WXbyJ1Cqh",
+    database: "bkd0tkqe4pywqvphn92c"
 });
-
-connection.connect();
 
 router.get("/users", async (req, res) => {
     try {
-        const [results] = await connection.promise().query("SELECT * FROM movieuserlist");
-
+        const [results] = await connection.query("SELECT * FROM movieuserlist");
         res.json(results);
     } catch (error) {
-        console.error("Error fetching users:", error);
-        res.status(500).send("Internal Server Error");
+        console.error("Kullanıcılar alınırken bir hata oluştu:", error);
+        res.status(500).send("İç Sunucu Hatası");
     }
 });
 
@@ -36,47 +35,57 @@ router.post("/signup", async (req, res) => {
 
     try {
         if (email.includes("admin")) {
-            await connection.promise().query(
+            await connection.query(
                 "INSERT INTO movieadminlist (emailAddress, password) VALUES (?, ?)", [email, password]
             );
         } else {
-            await connection.promise().query(
+            await connection.query(
                 "INSERT INTO movieuserlist (emailAddress, password) VALUES (?, ?)", [email, password]
             );
         }
 
         res.sendStatus(201);
     } catch (error) {
-        console.error(error);
-        res.sendStatus(500);
+        console.error("Kayıt sırasında bir hata oluştu:", error);
+        res.status(500).send("İç Sunucu Hatası");
     }
 });
 
-router.post("/updatePassword", (req, res) => {
+router.post("/updatePassword", async (req, res) => {
     const { email, newPassword } = req.body;
-    connection.query("UPDATE movieuserlist SET password = ? WHERE emailAddress = ?", [newPassword, email], function (error, result) {
-        if (error) throw error;
-        else {
-            res.sendStatus(200);
+
+    try {
+        const [result] = await connection.query(
+            "UPDATE movieuserlist SET password = ? WHERE emailAddress = ?", [newPassword, email]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).send("Kullanıcı bulunamadı");
         }
-    })
-})
+
+        res.sendStatus(200);
+    } catch (error) {
+        console.error("Şifre güncellerken bir hata oluştu:", error);
+        res.status(500).send("İç Sunucu Hatası");
+    }
+});
 
 router.delete("/users/:email", async (req, res) => {
     const { email } = req.params;
+
     try {
-        const [results] = await connection.promise().query(
+        const [result] = await connection.query(
             "DELETE FROM movieuserlist WHERE emailAddress = ?", [email]
         );
 
-        if (results.affectedRows === 0) {
+        if (result.affectedRows === 0) {
             return res.status(404).send("Kullanıcı bulunamadı");
         }
 
         res.sendStatus(204);
     } catch (error) {
-        console.error("Error deleting user:", error);
-        res.status(500).send("Internal Server Error");
+        console.error("Kullanıcı silinirken bir hata oluştu:", error);
+        res.status(500).send("İç Sunucu Hatası");
     }
 });
 

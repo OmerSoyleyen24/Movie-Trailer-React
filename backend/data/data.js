@@ -1,32 +1,27 @@
 import express from "express";
 import cors from "cors";
-import mysql from "mysql2";
-import dotenv from "dotenv";
-import adminRoutes from "../router/admin.js"
+import mysql from "mysql2/promise";
+import adminRoutes from "../router/admin.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-dotenv.config();
+const PORT = process.env.PORT || 5000;
 
-const PORT = 5000;
-
-const connection = mysql.createConnection({
-    host: DB_HOST,
-    user: DB_USERNAME,
-    password: DB_PASSWORD,
-    database: DB_DBNAME
-})
-
-connection.connect();
+const connection = await mysql.createConnection({
+    host: "bkd0tkqe4pywqvphn92c-mysql.services.clever-cloud.com",
+    user: "urz0ziojlffpstv8",
+    password: "aTSzBPPk550WXbyJ1Cqh",
+    database: "bkd0tkqe4pywqvphn92c"
+});
 
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const [adminResults] = await connection.promise().query(
+        const [adminResults] = await connection.query(
             "SELECT * FROM movieadminlist WHERE emailAddress = ?", [email]
         );
 
@@ -36,7 +31,7 @@ app.post("/login", async (req, res) => {
             }
         }
 
-        const [userResults] = await connection.promise().query(
+        const [userResults] = await connection.query(
             "SELECT * FROM movieuserlist WHERE emailAddress = ?", [email]
         );
 
@@ -59,15 +54,11 @@ app.post("/signup", async (req, res) => {
     }
 
     try {
-        if (email.includes("admin")) {
-            await connection.promise().query(
-                "INSERT INTO movieadminlist (emailAddress, password) VALUES (?, ?)", [email, password]
-            );
-        } else {
-            await connection.promise().query(
-                "INSERT INTO movieuserlist (emailAddress, password) VALUES (?, ?)", [email, password]
-            );
-        }
+        const table = email.includes("admin") ? "movieadminlist" : "movieuserlist";
+
+        await connection.query(
+            `INSERT INTO ${table} (emailAddress, password) VALUES (?, ?)`, [email, password]
+        );
 
         res.sendStatus(201);
     } catch (error) {
@@ -76,18 +67,19 @@ app.post("/signup", async (req, res) => {
     }
 });
 
-app.post("/updatePassword", (req, res) => {
+app.post("/updatePassword", async (req, res) => {
     const { email, newPassword } = req.body;
-    connection.query("UPDATE movieuserlist SET password = ? WHERE emailAddress = ?", [newPassword, email], function (error, result) {
-        if (error) throw error;
-        else {
-            res.sendStatus(200);
-        }
-    })
-})
+    try {
+        await connection.query("UPDATE movieuserlist SET password = ? WHERE emailAddress = ?", [newPassword, email]);
+        res.sendStatus(200);
+    } catch (error) {
+        console.error(error);
+        res.sendStatus(500);
+    }
+});
 
 app.use("/admin", adminRoutes);
 
 app.listen(PORT, () => {
     console.log("Server listening on Port", PORT);
-})
+});

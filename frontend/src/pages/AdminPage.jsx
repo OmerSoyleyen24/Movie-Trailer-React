@@ -18,7 +18,7 @@ const AdminPage = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/admin/users");
+                const response = await axios.get("https://movie-trailer-react.onrender.com/admin/users");
                 setUsers(response.data);
             } catch (error) {
                 console.error("Kullanıcı verilerini çekerken hata oluştu:", error);
@@ -30,7 +30,7 @@ const AdminPage = () => {
 
     const deleteUserData = async (emailAddress) => {
         try {
-            await axios.delete(`http://localhost:5000/admin/users/${emailAddress}`);
+            await axios.delete(`https://movie-trailer-react.onrender.com/admin/users/${emailAddress}`);
             setUsers(users.filter(user => user.emailAddress !== emailAddress));
         } catch (error) {
             console.error("Kullanıcı silinirken hata oluştu:", error);
@@ -39,13 +39,13 @@ const AdminPage = () => {
 
     const updateUserData = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:5000/updatePassword", { email, newPassword });
+        axios.post("https://movie-trailer-react.onrender.com/updatePassword", { email, newPassword });
         setUpdateUserDataDiv(false);
     };
 
     const addUserData = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:5000/signup", { email, password, confirmPassword });
+        axios.post("https://movie-trailer-react.onrender.com/signup", { email, password, confirmPassword });
         setAddUserDataDiv(false);
     };
 

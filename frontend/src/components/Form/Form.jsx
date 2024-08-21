@@ -13,7 +13,7 @@ const Form = ({ type, darkLight }) => {
 
     const loginSubmit = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:5000/login", { email, password })
+        axios.post("https://movie-trailer-react.onrender.com/login", { email, password })
             .then(res => {
                 if (res.status === 200) {
                     navigate("/home");
@@ -34,7 +34,7 @@ const Form = ({ type, darkLight }) => {
 
     const signupSubmit = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:5000/signup", { email, password, confirmPassword })
+        axios.post("https://movie-trailer-react.onrender.com/signup", { email, password, confirmPassword })
             .then(res => {
                 if (res.status === 201) {
                     navigate("/login");

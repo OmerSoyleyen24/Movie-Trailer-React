@@ -13,7 +13,7 @@ const UpdatePassword = () => {
 
     const updateSubmit = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:5000/updatePassword", { email, newPassword })
+        axios.post("http://localhost:3306/updatePassword", { email, newPassword })
             .then(res => {
                 if (res.status === 200) {
                     navigate("/login");
