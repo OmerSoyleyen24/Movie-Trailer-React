@@ -1,0 +1,27 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+}
+
+.sidebar-wrapper {
+    background-color: #17202A;
+    width: 60px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 50px;
+    margin-left: -5px;
+    margin-top: 200px;
+}
+
+@media (max-width:1400px) {
+    .sidebar {
+        display: none;
+    }
+}

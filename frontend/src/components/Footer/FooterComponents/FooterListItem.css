@@ -1,0 +1,36 @@
+.footer-list-item{
+    background-color: #273746;
+    color: white;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.footer-list-item .first{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    font-size: 20px;
+}
+
+.footer-list-item .first i{
+    cursor: pointer;
+}
+
+.footer-list-item .second{
+    width: 100%;
+    padding: 0 20px;
+    font-size: 20px;
+}
+
+.footer-list-item .second.d-none{
+    display: none;
+}
+
+.footer-list-item .second.d-block{
+    display: block;
+}
