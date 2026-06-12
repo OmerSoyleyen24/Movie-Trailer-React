@@ -1,0 +1,181 @@
+.single-film-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.single-film-wrapper #single-film-information{
+    display: flex;
+    justify-content: space-between;
+}
+
+.single-film-wrapper #single-film-information .title{
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.single-film-wrapper #single-film-information .overview{
+    font-size: 1.25rem;
+    text-align: justify;
+    margin-bottom: 2rem;
+}
+
+.popularityReleaseDate{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.single-film-wrapper #single-film-information .popularity{
+    font-size: 1.25rem;
+    text-align: left;
+    margin-bottom: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 0;
+}
+
+.single-film-wrapper #single-film-information .releaseDate{
+    text-align: right;
+    position: absolute;
+    top: 50%;
+    right: 0;
+}
+
+.single-film-reviews {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 150px;
+    margin: 0 auto;
+}
+
+.single-film-reviews i{
+    font-size: 12px;
+    color: gold;
+}
+
+.single-film-review-questions{
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    row-gap: 20px;
+    margin-top: 50px;
+}
+
+.single-film-review-questions button{
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 25px;
+}
+
+.single-film-review-questions-star-list{
+    display: flex;
+    column-gap: 10px;
+}
+
+.single-film-review-questions-star-list li{
+    cursor: pointer;
+}
+
+.single-film-review-questions-star-list li.active i{
+    color: orange;
+}
+
+.single-film-review-questions-star-list li:not(:last-child){
+    padding-right: 5px;
+    border-right: 1px solid white;
+}
+
+.single-film-reviews-list-div{
+    width: 100%;
+    display: flex;
+}
+
+.single-film-reviews-list{
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+}
+
+
+.single-film-reviews-list-item-star-commit{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.single-film-reviews-list-item-star-commit li:first-child{
+    display: flex;
+    column-gap: 11px;
+}
+
+.single-film-reviews-list-item-star-commit li:first-child p{
+    padding-right: 5px;
+    border-right: 1px solid white;
+}
+
+.single-film-reviews-list-item-star-commit li p:last-child{
+    opacity: .9;
+}
+
+.single-film-reviews-list-item-star-commit li p{
+    font-size: 15px;
+    text-align: justify;
+}
+
+.single-film{
+    display: flex;
+    column-gap: 100px;
+}
+
+.movie-list-information{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    color: white;
+}
+
+.movie-list-information.active{
+    color: black;
+}
+
+.movie-list-information li{
+    text-align: justify;
+}
+
+@media (max-width:768px) {
+    .single-film-item{
+        flex-direction: column;
+        row-gap: 50px;
+    }
+}
+
+@media (max-width:500px) {
+    .single-film-wrapper{
+        width: 100%;
+        margin: 0 !important;
+    }
+    .single-film-wrapper #single-film-information{
+        flex-direction: column;
+        row-gap: 100px;
+        margin-bottom: 100px;
+    }
+    .single-film-wrapper .single-film-video{
+        max-width: 90%;
+        height: unset;
+        margin: 0 auto !important;
+    }
+    .single-film-reviews-list-item-star-commit li p{
+        font-size: 14px;
+    }
+    
+}
+/*! single-film end */

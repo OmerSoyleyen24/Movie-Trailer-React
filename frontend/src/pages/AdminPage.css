@@ -1,0 +1,83 @@
+table {
+    box-sizing: border-box;
+}
+
+table.background-dark,
+table thead tr.background-dark {
+    background-color: black !important;
+}
+
+.updatePassword,
+.addUser {
+    max-width: 50%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    row-gap: 10px;
+    padding: 12.5px;
+}
+
+.updatePassword h2,
+.adduser h2 {
+    font-size: 1.5rem;
+}
+
+.updatePassword button,
+.addUser button {
+    max-width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    background-color: green;
+    color: white;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+table tr {
+    height: 40px;
+    border: 1px solid black;
+}
+
+table th,
+table td {
+    padding: 0 20px;
+}
+
+table thead tr {
+    border: 1px solid black;
+}
+
+table td ul {
+    display: flex;
+    column-gap: 20px;
+}
+
+table td.buttons {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+}
+
+table td button {
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    background-color: white;
+    margin-left: 40px;
+    padding: 10px 20px;
+    font-size: 15px;
+    height: 40px;
+}
+
+table td button.delete {
+    background-color: red;
+    color: white;
+}
+
+table td button.update {
+    background-color: green;
+    color: white;
+}
